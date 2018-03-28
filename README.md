@@ -6,14 +6,14 @@ to all the clients in the LAN.
 
 ## Usage
 
- - Compile the server and client source code using
-    	`$ g++ gc_server.cpp -o gc_server`
+ - Compile the server and client source code using  
+    	`$ g++ gc_server.cpp -o gc_server`  
 	`$ g++ gc_client.cpp -o gc_client`
  
- - Run the server program on the computer chosen to be server.
+ - Run the server program on the computer chosen to be server.  
 	`$ ./gc_server server_ip server_port`
  
- - Run the client program on the client computer
+ - Run the client program on the client computer  
 	`$ ./gc_client server_ip server_port`
  
 > As soon as the connection is done, server and all other existing clients will be notified that a new client has joined the connection.
