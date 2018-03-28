@@ -10,6 +10,7 @@
 #include <poll.h>
 
 #define BUFF_SIZE 150
+#define TIMEOUT 500
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +22,10 @@ int main(int argc, char *argv[])
 
 	int status;
 	struct addrinfo hints, *res;
+	/* 
+	 * pollfd structure stores descriptors and events associaed with them.
+	 * here one is for client's stdin and one for client's socket
+	 */
 	struct pollfd fds[2];
 
 	memset(&hints, 0, sizeof(hints));
@@ -49,11 +54,12 @@ int main(int argc, char *argv[])
 
 	while (1)
        	{
-		if (poll(fds, 2, 500) > 0)
+		if (poll(fds, 2, TIMEOUT) > 0)
 		{
 			char buff[BUFF_SIZE];
 			size_t send_bytes, recv_bytes;
 			memset(buff, 0, sizeof(buff));
+			/* event : client receives data on stdin */
 			if (fds[0].revents && POLLIN)
 			{
 				fgets(buff, BUFF_SIZE, stdin);
@@ -62,6 +68,7 @@ int main(int argc, char *argv[])
 					perror("send");
 				}
 			}
+			/* event : client receives data on its socket */
 			else if (fds[1].revents && POLLIN)
 			{
 				if ((recv_bytes = recv(fds[1].fd, buff, BUFF_SIZE, 0)) != 0)
@@ -69,6 +76,7 @@ int main(int argc, char *argv[])
 					buff[recv_bytes] = '\0';
 					fputs(buff, stdout);
 				}
+				/* if server has closed the connection, then close the file descriptor */
 				else
 				{
 					close(fds[1].fd);
