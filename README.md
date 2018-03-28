@@ -20,3 +20,11 @@ to all the clients in the LAN.
   
   From now on any message sent will be received by all the other computers
   along with the IP of the sender.
+
+## What I used :
+
+ - `getaddrinfo()` to get the linked list of addrinfo structures.
+ - used *I/O multiplexing* i.e. `poll()` to handle updates on various file descriptors, such as taking input, receiving incoming connections and
+ receiving messages from clients.
+ - `C++ vector` to manage the addresses of the clients.
+
