@@ -3,6 +3,7 @@
 This is a Chat application used for communication with all the clients
 present over LAN made by using *socket programming* in **C/C++** . A message sent by a client ( or server  ) is broadcasted 
 to all the clients in the LAN.
+Without GUI
 
 ## Usage
 
